@@ -58,7 +58,6 @@ int main(void){
 	printf("The magic sum is: %d\n", sum);
 	printf("The magic number is: %d\n", sum % 10);
 
-
 	return 0;
 }
 

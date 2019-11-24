@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-void most_similar(int[4][5], int, int);
+void pairing(int[4][5], int, int);
 
 int main(void)
 {
@@ -11,42 +11,43 @@ int main(void)
 
     int ratings[4][5] = {{4, 4, 3, 3, 2}, {4, 3, 1, 1, 5}, {5, 5, 5, 2, 2}, {4, 3, 1, 1, 4}};
 
-    most_similar(ratings, m, n);
+    pairing(ratings, m, n);
 
     return 0;
 }
 
-void most_similar(int ratings[4][5], int m, int n)
-{
+void pairing(int ratings[4][5], int m, int n){
 
-    int i, j, k, distance = 0, leastdiff = 0, index1, index2, movie = 0;
+    int index1, index2;
+    int mindiff, i, j, k, p, q, diff, sum=0, total = 0;
 
-    for (i = 0; i < n; i++)
-    {
+    //...Initialize mindiff
 
-        leastdiff = leastdiff + (int) pow((ratings[0][i] - ratings[1][i]), 2);
+    for (k = 0; k < n; k++) {
+        q = pow((ratings[0][k] - ratings[1][k]), 2);
+        total = total + p;
     }
 
-    int mindist = sqrt(leastdiff);
-    int arr[4] = {0};
+    mindiff = sqrt(total);
 
-    for (i = 0; i < m; i++)
-    {
-        for (k = i+1; k < m; k++){
-            for (j = 0; j < n; j++){
-                movie = movie + (int) pow((ratings[i][j] - ratings[k][j]), 2);
+    //... Calculate the minimum distance
+    for (i = 0; i < m; i++) {
+        for (j = i + 1; j < m; j++) {
+            sum = 0;
+            for (k = 0; k < n; k++) {
+                p = pow((ratings[i][k] - ratings[j][k]), 2);
+                sum = sum + p;
             }
-            distance = sqrt(movie);
+            diff = sqrt(sum);
 
-            if (distance <= mindist){
-                mindist = distance;
+            if (diff < mindiff) {
+                mindiff = diff;
                 index1 = i;
-                index2 = k;
-                movie = 0;
+                index2 = j;
             }
         }
-        arr[i] = distance;
     }
 
-    printf("the luck participants are %d %d with score of %d\n", index1, index2, mindist);
+    printf("the luck participants are %d %d with score of %d\n", 
+            index1, index2, mindiff);
 }
